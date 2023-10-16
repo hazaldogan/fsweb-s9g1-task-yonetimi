@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 import "./app.css";
 import Task from "./Task";
 import TaskForm from "./TaskForm";
@@ -19,7 +20,23 @@ function App() {
   }
 
   function handleComplete(id) {
-    console.log("tamamlama fonksiyonunu buraya yazın");
+    const updateTasks = tasks.map((t) => {
+      if (t.id === id) {
+        return { ...t, status: "yapıldı" };
+      }
+      return t;
+    });
+    setTasks(updateTasks);
+    toast.success("Task tamamlandı!", {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
   }
 
   return (
@@ -27,7 +44,7 @@ function App() {
       <div className="formColumn">
         <div className="form-container">
           <h2>Yeni Task</h2>
-          <TaskForm kisiler={team} submitFn={handleTaskSubmit} />
+          {/* <TaskForm kisiler={team} submitFn={handleTaskSubmit} /> */}
           <TaskHookForm kisiler={team} submitFn={handleTaskSubmit} />
         </div>
 
